@@ -1,0 +1,19 @@
+#!/usr/bin/bash
+
+## can be dns style Active Directory domain or NetBIOS style
+declare -g ad_domain="ccs"
+
+declare -g ad_permission_group_container="OU=SystemGroups,DC=ccs,DC=local"
+
+## get server name without DNS domain and set it to all upper-case
+declare -g server_name=` hostname --short | tr '[:lower:]' '[:upper:]' `
+
+## template group names
+declare -g read_grp_name_template="{{servername}}_{{sharename}}-Share-Read"
+declare -g modify_grp_name_template="{{servername}}_{{sharename}}-Share-Modify"
+declare -g full_grp_name_template="{{servername}}_{{sharename}}-Share-FullControl"
+
+## list of share names that contain user directories
+declare -a parents_w_user_dirs
+declare parents_w_user_dirs[0]="home"
+declare parents_w_user_dirs[1]="profiles"
